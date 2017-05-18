@@ -179,7 +179,7 @@ $ sudo npm install npm@latest -g
 
 
 ---------------------------------------------------------
----- fourmi/epaper
+---- Setup fourmi/epaper
 ---------------------------------------------------------
 
 Open a Terminal.
@@ -214,8 +214,30 @@ To launch and view the application on an android emulator or connected android p
 $ ionic run android
 
 
+---------------------------------------------------------
+-- Develop and use cordova plugin within ionic project
+---------------------------------------------------------
+
+$ ionic plugin list
+
+$ ionic plugin rm com-hoonboon-plugins-echo
+
+$ ionic plugin add https://github.com/hoonboon/demo-cordova-plugin-01#master --save
+
+$ ionic plugin rm com.comscoreplugin
+
+$ ionic plugin add https://github.com/fourmisolutions/cordova-comscore-plugin#master --save
 
 
+-- allow capturing of http traffic for testing on comScore plugin using Charles Proxy 
+$ emulator -avd Nexus_5X_API_24 -http-proxy 192.168.1.78:8888
 
+
+-- remove initial plugin from GitHub and add from local development folder 
+$ ionic plugin list
+
+$ ionic plugin remove com.comscoreplugin
+
+$ ionic plugin add /Users/hOOnbOOn/git/cordova-comscore-plugin
 
 
