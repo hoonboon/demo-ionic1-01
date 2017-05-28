@@ -24,63 +24,25 @@ angular.module('todo', ['ionic', 'todo.controllers', 'todo.services'])
 	hbecho.echo(
         'Plugin is ready!',
         function(msg) {
-            document
-              .getElementById('deviceready')
-              .querySelector('.received')
-              .innerHTML = msg;
+            document.getElementsByTagName('h2')[0].innerHTML = msg;
         },
         function(err) {
-            document
-              .getElementById('deviceready')
-              .innerHTML = '<p class="event received">' + err + '</p>';
+            document.getElementsByTagName('h2')[0].innerHTML = err;
         }
     );
 	
 	hbecho.echojs(
         'Hello from Plugin!!',
         function(msg) {
-            document.getElementsByTagName('h1')[0].innerHTML = msg;
+            document.getElementsByTagName('h1')[0].innerHTML += " (" + msg + ")";
         },
         function(err) {
             document.getElementsByTagName('h1')[0].innerHTML = err;
         }
     );
 	
-	/* ComScore SDK v5.X start - used for android */
-	
+	// ComScore SDK v5.X
 	ComScorePlugin.initClient("24608202", "82a44e8c84c174abac3cfdbcb2050ced");
-	
-	$ionicPlatform.on('pause', function() {
-	    ComScorePlugin.notifyExitForeground();
-	});
-
-	$ionicPlatform.on('resume', function() {
-        ComScorePlugin.notifyEnterForeground();
-	});
-
-	/* ComScore SDK v5.X end */
-	
-	/* TODO: ComScore SDK before v5.X start - retained for ios */
-	
-//	ComScorePlugin.setCustomerData("24608202", "82a44e8c84c174abac3cfdbcb2050ced");
-//	//ComScorePlugin.setAppName("testApp01");
-//	//ComScorePlugin.autoUpdateForeground("5");
-//	//ComScorePlugin.autoUpdateBackground("5");
-//
-//	$ionicPlatform.on('pause', function() {
-//	    ComScorePlugin.onExitForeground();
-//	});
-//
-//	$ionicPlatform.on('resume', function() {
-//        ComScorePlugin.onEnterForeground();
-//  });
-//
-//	ComScorePlugin.start();
-	
-	/* ComScore SDK before v5.X end */
-	
-	
-	
 	
   });
 })

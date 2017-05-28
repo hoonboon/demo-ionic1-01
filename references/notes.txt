@@ -32,10 +32,33 @@ $ sudo npm install -g cordova@6.5.0 ionic@2.2.3
         
 -- TODO: Install required tools - iOS 
 - Refer to: http://cordova.apache.org/docs/en/latest/guide/platforms/ios/index.html
-  - 
+  - Install Xcode:
+    - Select the Xcode version that is supported by the the Mac OS X version fo the development machine:
+      - Refer to here (https://en.wikipedia.org/wiki/Xcode#Version_comparison_table)).
+    - Download latest version of Xcode from here (https://itunes.apple.com/us/app/xcode/id497799835?mt=12).
+    - Search and download previous versions of Xcode from here (https://developer.apple.com/downloads/index.action). 
+    - Choose Xcode 8.2.1 for Mac OS X El Capitan 10.11.6.
+    - Note: To submit apps to the Apple App Store℠ requires the latest versions of the Apple tools.
+  - Enable command-line tools for Cordova to run:
+  
+$ xcode-select --install 
+xcode-select: error: command line tools are already installed, use "Software Update" to install updates
 
-$ sudo npm install -g ios-sim ios-deploy
+$ npm install -g ios-sim
+$ npm install -g ios-deploy
 
+  - Check available simulators:
+  
+$ ios-sim showdevicetypes
+
+  - Download and install new simulators for additional iOS SDK versions or platforms using the Xcode app (need to restart for newly installed simulators to be available):
+    - Xcode > Preferences... > Components
+
+  - Install CocoaPods (refer to https://cocoapods.org/): 
+  
+$ sudo gem install cocoapods
+$ pod setup  
+  
 
 
 
@@ -59,6 +82,10 @@ $ ionic serve
 -- Test on android emulator
 $ ionic emulate android
 
+-- Test on ios emulator
+$ ionic emulate ios --target="iPhone-6-Plus, 10.2"
+$ ionic emulate ios --target="iPhone-6-Plus, 8.4"
+
 -- Add new project into GitHub
   - Refer to https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/
 
@@ -81,19 +108,27 @@ $ git push -u origin master
 
 - Refer to: https://forum.ionicframework.com/t/how-to-clone-ionic-project-from-git-which-i-already-have-created-before/63102
 
-$ npm install 
+$ npm install
+
+$ ionic platform add android@6.1.0 
+
+$ ionic platform add ios@4.3.1
+
+$ ionic resources 
 
 $ ionic state reset
-
-$ ionic resources
 
 $ chmod +x hooks/after_prepare/copy_resource_files.js
 
 $ ionic build android 
 
+$ ionic build ios 
+
 $ ionic serve
 
 $ ionic emulate android
+
+$ ionic emulate ios --target="iPhone-6-Plus, 10.2"
 
 
 
@@ -146,6 +181,10 @@ Error: CocoaPods was not found. Please install version 1.0.1 or greater from htt
 
     - To develop and test for android only, the plug-in is successfully added successfully.
     - TODO: To develop and test for ios, please proceed to install CocoaPods as per the error message and retry.
+    
+$ sudo gem install cocoapods
+$ pod setup
+
 
 
 - Possible Error #3:
@@ -178,6 +217,15 @@ $ sudo npm cache clear
 $ sudo npm install npm@latest -g
 
 
+-- To find out what are the simulator images available you can use to list them
+$ cordova emulate ios --list
+$ platforms/ios/cordova/lib/list-emulator-images
+
+
+
+
+
+
 ---------------------------------------------------------
 ---- Setup fourmi/epaper
 ---------------------------------------------------------
@@ -187,31 +235,46 @@ Open a Terminal.
 Change active directory to parent folder of the new project (replace [Folder Name] with the intended folder name):
 $ cd /Users/hOOnbOOn/git 
 
-Clone the GitHub project to local directory (replace [Branch Name] with the intended branch name): 
-$ git clone --branch SHE-2-Setup-epaper-from-scratch https://github.com/fourmisolutions/epaper.git
+Clone the GitHub project to local directory (replace [Branch Name] with the intended branch name, [Directory] with the intended directory name): 
+$ git clone --branch SHE-6-Setup-epaper-ios https://github.com/fourmisolutions/epaper.git epaper-she6
 
 Change activate directory to newly created project folder:
-$ cd epaper
+$ cd epaper-she6
 
 Configure the project dependencies into new project folder (this will create the "node_modules" folder):
 $ npm install 
+
+Explicitly add the required platforms to the project folder:
+$ ionic platform add android@6.1.0 
+Trouble-shooting: Possible Error #4
+Error: Source path does not exist: resources\android\icon\drawable-hdpi-icon.png
+
+$ ionic platform add ios@4.3.1
+Trouble-shooting: Possible Error #5
+Error: Source path does not exist: resources/ios/icon/icon-40.png
+
+Copy the required resources into platforms folders:
+$ ionic resources
 
 Configure the platform and plugins into new project folder (this will create the "platform" and "plugins" folders):
 $ ionic state reset
 Trouble-shooting: Possible Error #2
 
-Copy the required resources into platforms folders:
-$ ionic resources
-
 Build the project for android:
 $ ionic build android 
 Trouble-shooting: Possible Error #3
 
-To launch and view the application on a browser for development:
-$ ionic serve
-
 To launch and view the application on an android emulator or connected android phone:
 $ ionic run android
+
+Build the project for iOS:
+$ ionic build ios
+
+To launch and view the application on an iOS emulator:
+$ ionic run ios
+
+To launch and view the application on a browser for development:
+$ ionic serve
 
 
 ---------------------------------------------------------
@@ -236,7 +299,11 @@ $ emulator -avd Nexus_5X_API_24 -http-proxy 192.168.1.78:8888
 -- remove initial plugin from GitHub and add from local development folder 
 $ ionic plugin list
 
-$ ionic plugin remove com.comscoreplugin
+$ ionic plugin rm com-hoonboon-plugins-echo
+
+$ ionic plugin add /Users/hOOnbOOn/git/demo-cordova-plugin-01
+
+$ ionic plugin rm com.comscoreplugin
 
 $ ionic plugin add /Users/hOOnbOOn/git/cordova-comscore-plugin
 
